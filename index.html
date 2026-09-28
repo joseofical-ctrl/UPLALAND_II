@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPLALAND 2 — Crónicas del Valle del Mantaro</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Estilos Cinemáticos -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Íconos Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            upla: {
+              night: '#020611',
+              card: '#081326',
+              border: '#112544',
+              blue: '#0284c7',
+              cyan: '#38bdf8'
+            },
+            mantaro: {
+              forest: '#047857',
+              emerald: '#10b981',
+              leaf: '#34d399',
+              gold: '#fbbf24'
+            }
+          },
+          fontFamily: {
+            minecraft: ['"Minecraft"', 'monospace'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="text-slate-200 min-h-screen flex flex-col selection:bg-mantaro-emerald selection:text-black relative">
+
+  <!-- Toast flotante estilo Logro de Minecraft -->
+  <div id="toast" class="fixed top-6 right-6 z-50 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-upla-card/95 backdrop-blur-md border-2 border-mantaro-emerald px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+      <span class="text-2xl animate-bounce">⚔️</span>
+      <div>
+        <p class="font-mc text-xs text-mantaro-leaf">¡LOGRO DESBLOQUEADO!</p>
+        <p id="toast-msg" class="text-xs text-slate-300 font-mono">IP copiada al portapapeles</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de Navegación Traslúcida -->
+  <header class="border-b border-upla-border/70 bg-upla-night/85 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer group">
+        <div>
+          <span class="font-mc text-sm tracking-wider text-white block group-hover:text-mantaro-leaf transition">UPLALAND <span class="text-mantaro-leaf">II</span></span>
+          <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Facultad de Ingeniería • UPLA</span>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex space-x-7 text-xs font-bold uppercase tracking-wider text-slate-400">
+        <a href="#conexion" class="hover:text-mantaro-leaf transition duration-150">Conexión</a>
+        <a href="#lifesteal" class="hover:text-rose-400 transition duration-150">LifeSteal</a>
+        <a href="#crafteos" class="hover:text-amber-400 transition duration-150">Crafteos</a>
+        <a href="#comandos" class="hover:text-upla-cyan transition duration-150">Comandos</a>
+        <a href="#reglas" class="hover:text-mantaro-leaf transition duration-150">Pacto</a>
+        <a href="#participantes" class="hover:text-white transition duration-150">Roster</a>
+      </nav>
+
+      <div class="flex items-center gap-2.5">
+        <!-- Botón Toggle de Sonido FX -->
+        <button id="btn-sound-toggle" onclick="toggleAudioFx()" title="Activar/Silenciar Efectos de Sonido" class="bg-upla-card hover:bg-upla-border text-slate-300 p-2 rounded-lg border border-upla-border transition flex items-center justify-center">
+          <i data-lucide="volume-2" id="sound-icon" class="w-4 h-4 text-mantaro-leaf"></i>
+        </button>
+
+        <a id="btn-discord-nav" href="#" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 bg-[#5865F2] hover:bg-[#4752c4] hover:shadow-[0_0_15px_rgba(88,101,242,0.5)] text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition duration-200">
+          <i data-lucide="disc" class="w-3.5 h-3.5"></i> Discord
+        </a>
+
+        <div id="server-badge" class="flex items-center space-x-2 bg-upla-card/90 px-3.5 py-1.5 rounded-full border border-upla-border text-xs">
+          <span class="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <span id="server-status-text" class="font-mono text-[11px] text-slate-300 font-semibold">Sondeando...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       HERO CINEMATOGRÁFICO PANORÁMICO (TAMAÑO Y POSICIÓN INTACTOS)
+  ======================================================== -->
+  <section class="relative w-full min-h-[660px] md:min-h-[760px] lg:min-h-[940px] flex flex-col justify-end overflow-hidden">
+
+    <!-- 2. Arte Principal Cinemático (Nítido, centrado y sin recortes) -->
+    <div class="absolute inset-0 -z-20 flex items-center justify-center">
+      <img 
+        src="assets/Banner.png" 
+        alt="Banner Oficial UPLALAND II - Facultad de Ingeniería UPLA" 
+        class="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.04]"
+      />
+    </div>
+
+    <!-- 3. Viñeta Cinemática de Lente + Fundido al Fondo Oscuro -->
+    <div class="absolute inset-0 -z-10 cinematic-vignette pointer-events-none"></div>
+    <div class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-upla-night via-upla-night/70 to-transparent -z-10 pointer-events-none"></div>
+
+    <!-- 4. Lienzo de Partículas Mágicas Flotantes (Efecto Shaders) -->
+    <canvas id="particles-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-80"></canvas>
+
+    <!-- 5. Contenido y Launcher Flotante en la Base (Sin tapar los edificios) -->
+    <div class="max-w-4xl mx-auto px-4 pb-10 w-full z-10 flex flex-col items-center">
+      
+      <!-- Insignias flotantes sobre el césped -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-3.5">
+        <span class="animate-float bg-black/75 backdrop-blur-md border border-mantaro-emerald/50 text-mantaro-leaf px-3.5 py-1 rounded-full text-[11px] font-bold flex items-center gap-1.5 shadow-xl hover:border-mantaro-emerald transition">
+          <i data-lucide="mountain" class="w-3.5 h-3.5 text-mantaro-emerald"></i> Valle del Mantaro • 3,250 msnm
+        </span>
+        <span class="animate-float-delayed bg-black/75 backdrop-blur-md border border-upla-cyan/50 text-upla-cyan px-3.5 py-1 rounded-full text-[11px] font-bold flex items-center gap-1.5 shadow-xl hover:border-upla-cyan transition">
+          <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i> Facultad de Ingeniería UPLA
+        </span>
+        <span class="animate-float bg-black/75 backdrop-blur-md border border-rose-500/50 text-rose-300 px-3.5 py-1 rounded-full text-[11px] font-bold flex items-center gap-1.5 shadow-xl hover:border-rose-400 transition">
+          <i data-lucide="sword" class="w-3.5 h-3.5 text-rose-400"></i> LifeSteal SMP 1.21
+        </span>
+      </div>
+
+      <!-- Tarjeta Launcher con Resplandor Místico y Shimmer -->
+      <div class="w-full magical-glow bg-upla-card/90 backdrop-blur-xl border-2 border-upla-border p-3.5 sm:p-4 rounded-2xl shadow-2xl flex flex-col md:flex-row items-center justify-between gap-3 relative overflow-hidden">
+        <div class="shimmer-bar"></div>
+        
+        <!-- Input IP Principal -->
+        <div class="w-full md:w-auto flex-1 text-left relative z-10">
+          <div class="flex items-center justify-between text-[10px] font-mc text-mantaro-leaf uppercase tracking-wider mb-1">
+            <span>Dirección IP del Servidor</span>
+            <span class="text-slate-400 font-mono">Crossplay PC & Celular</span>
+          </div>
+          <div class="bg-upla-night px-3 py-2 rounded-xl border border-upla-border flex items-center justify-between">
+            <span class="font-mono text-xs sm:text-sm font-bold text-white select-all">UPLALAND_TWO.aternos.me:41031</span>
+            <button onclick="copyNotify(SERVER_DATA.connection.java.ip, 'IP Principal')" class="mc-btn-primary px-3 py-1.5 rounded-lg text-xs font-mc ml-2 flex items-center gap-1">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> COPIAR
+            </button>
+          </div>
+        </div>
+
+        <!-- Botón Discord -->
+        <a id="btn-discord-hero" href="#" target="_blank" class="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-[#5865F2] hover:bg-[#4752c4] hover:shadow-[0_0_20px_rgba(88,101,242,0.6)] text-white px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-200 shadow-lg shrink-0 relative z-10">
+          <i data-lucide="disc" class="w-4 h-4"></i> Unirse a Discord
+        </a>
+      </div>
+
+      <!-- IP Respaldo -->
+      <div class="mt-3 flex items-center justify-center gap-2 text-xs text-slate-300 drop-shadow">
+        <span>¿Dificultad de DNS? Usa la IP de respaldo:</span>
+        <button onclick="copyNotify(SERVER_DATA.connection.backup, 'IP Respaldo')" class="font-mono text-mantaro-leaf font-bold hover:underline transition hover:text-white">
+          boarfish.aternos.host:41031
+        </button>[cite: 2]
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECCIÓN LIFESTEAL VITAL (CON SIMULADOR DE SALUD INTERACTIVO)
+  ======================================================== -->
+  <section id="lifesteal" class="max-w-5xl mx-auto px-4 w-full mt-10 mb-14 relative z-20">
+    <div class="card-hover-fx bg-gradient-to-br from-upla-card to-upla-night border-2 border-upla-border rounded-2xl p-5 sm:p-6 relative overflow-hidden shadow-2xl">
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="font-mc text-xs text-rose-500 uppercase tracking-wider">Mecánica Central del Evento</span>
+            <span class="text-[10px] bg-rose-950/80 border border-rose-600/50 text-rose-300 font-mono px-2 py-0.5 rounded-full">Hardcore SMP</span>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold tracking-tight text-white mb-2">
+            Sistema LifeSteal & Simulador de Vidas
+          </h2>
+          <p class="text-sm text-slate-300 leading-relaxed mb-4">
+            Inicias con <strong class="text-white">10 corazones</strong>. Cada baja PvP le arrebata 1 corazón permanente al oponente (tope: 20). Si llegas a 0 corazones quedas eliminado hasta que un compañero use una baliza de revivir.
+          </p>
+
+          <!-- Controles interactivos del simulador -->
+          <div class="flex flex-wrap items-center gap-3 bg-upla-night/60 p-3 rounded-xl border border-upla-border/70 text-xs">
+            <span class="text-slate-400 font-mono">Probar simulador PvP:</span>
+            <button onclick="adjustSimulatedHearts(-1)" class="mc-btn-secondary px-3 py-1 rounded font-mc text-rose-400 flex items-center gap-1">
+              -1 Muerte
+            </button>
+            <button onclick="adjustSimulatedHearts(1)" class="mc-btn-primary px-3 py-1 rounded font-mc text-white flex items-center gap-1">
+              +1 Baja PvP
+            </button>
+            <button onclick="resetSimulatedHearts()" class="text-slate-400 hover:text-white underline font-mono text-[11px] ml-auto">
+              Reiniciar (10)
+            </button>
+          </div>
+        </div>
+
+        <!-- Renderizador Dinámico de Corazones (Máximo 20 corazones en cuadrícula limpia) -->
+        <div class="bg-upla-night/90 border border-upla-border p-4 rounded-2xl flex flex-col items-center min-w-[280px] shadow-inner">
+          <div id="heart-container" class="grid grid-cols-5 gap-2 w-fit mx-auto mb-2.5 min-h-[56px] items-center"></div>
+          <div class="text-center">
+            <span id="heart-status-label" class="font-mc text-xs text-rose-400 block">Salud Base: 10 Corazones (20 HP)</span>
+            <span id="heart-status-sub" class="text-[10px] text-slate-400 font-mono">Estado: Activo y en juego</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       NUEVA SECCIÓN PRO: MESA DE CRAFTEO 3x3 INTERACTIVA
+  ======================================================== -->
+  <section id="crafteos" class="max-w-5xl mx-auto px-4 w-full mb-14 relative z-20">
+    <div class="border-b border-upla-border pb-3 mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <h2 class="font-mc text-lg text-amber-300 flex items-center gap-2">
+          <i data-lucide="hammer" class="w-5 h-5 text-mantaro-gold"></i> Recetas de Crafteo Personalizadas
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Forja artefactos prohibidos para alterar tu destino en el valle.</p>
+      </div>
+
+      <!-- Selector de recetas -->
+      <div class="flex gap-2">
+        <button id="btn-recipe-heart" onclick="selectRecipe('heart')" class="mc-btn-primary px-3.5 py-1.5 rounded-lg text-xs font-mc">
+          Corazón Extra
+        </button>
+        <button id="btn-recipe-revive" onclick="selectRecipe('revive')" class="mc-btn-secondary px-3.5 py-1.5 rounded-lg text-xs font-mc">
+          Baliza de Revivir
+        </button>
+      </div>
+    </div>
+
+    <!-- Módulo de la Mesa de Crafteo Minecraft -->
+    <div class="bg-upla-card border border-upla-border rounded-2xl p-5 sm:p-6 flex flex-col md:flex-row items-center justify-around gap-6 shadow-xl">
+      <!-- Cuadrícula 3x3 de Minecraft -->
+      <div class="flex flex-col items-center">
+        <span class="text-[11px] font-mc text-slate-400 uppercase tracking-wider mb-2">Cuadrícula 3×3 de Crafteo</span>
+        <div id="crafting-grid" class="grid grid-cols-3 gap-2 bg-[#2d2d2d] p-3 rounded-xl border-4 border-[#1e1e1e] shadow-inner">
+          <!-- 9 ranuras generadas por JS -->
+        </div>
+      </div>
+
+      <!-- Flecha de salida -->
+      <div class="hidden md:flex flex-col items-center text-slate-500">
+        <i data-lucide="arrow-right" class="w-8 h-8 text-mantaro-emerald animate-pulse"></i>
+      </div>
+
+      <!-- Resultado de crafteo -->
+      <div class="flex flex-col items-center bg-upla-night p-4 rounded-xl border border-upla-border min-w-[220px]">
+        <span class="text-[11px] font-mc text-mantaro-leaf uppercase tracking-wider mb-2">Resultado Final</span>
+        <div id="crafting-result-slot" class="w-16 h-16 bg-[#2d2d2d] border-4 border-[#1e1e1e] rounded-xl flex items-center justify-center mb-2 shadow-inner">
+          <!-- Ícono de resultado -->
+        </div>
+        <h4 id="recipe-name" class="font-bold text-white text-sm">Corazón Adicional</h4>
+        <p id="recipe-desc" class="text-xs text-slate-400 text-center font-mono mt-1">Otorga +1 corazón permanente al consumirse.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       CONEXIÓN DETALLADA (JAVA & BEDROCK)
+  ======================================================== -->
+  <section id="conexion" class="max-w-5xl mx-auto px-4 w-full mb-14 relative z-20">
+    <div class="grid md:grid-cols-2 gap-6">
+      
+      <!-- Java Edition -->
+      <div class="card-hover-fx bg-upla-card border border-upla-border rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <i data-lucide="monitor" class="w-4 h-4 text-mantaro-leaf"></i> Computadora (Java Edition)
+            </span>
+            <span class="bg-mantaro-forest/20 text-mantaro-leaf border border-mantaro-forest/40 text-[11px] px-2.5 py-0.5 rounded font-mono">1.21</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-1">Java Direct Connect</h3>
+          <p class="text-xs text-slate-300 mb-4">En multijugador, selecciona añadir servidor y pega:</p>
+          <div class="bg-upla-night p-3 rounded-xl border border-upla-border mb-4 font-mono text-sm font-bold text-mantaro-leaf select-all flex items-center justify-between">
+            <span id="ip-java"></span>
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-slate-500"></i>
+          </div>
+        </div>
+        <button onclick="copyNotify(SERVER_DATA.connection.java.ip, 'IP Java')" class="mc-btn-secondary py-2.5 rounded-xl text-xs font-mc uppercase w-full flex items-center justify-center gap-2">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Dirección Java
+        </button>
+      </div>
+
+      <!-- Bedrock Edition -->
+      <div class="card-hover-fx bg-upla-card border border-upla-border rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <i data-lucide="smartphone" class="w-4 h-4 text-upla-cyan"></i> Celular / Consolas (Bedrock)
+            </span>
+            <span class="bg-upla-blue/20 text-upla-cyan border border-upla-blue/40 text-[11px] px-2.5 py-0.5 rounded font-mono">Geyser</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-1">Bedrock Crossplay</h3>
+          <p class="text-xs text-slate-300 mb-4">Ingresa en Servidores > Añadir servidor externo:</p>
+          
+          <div class="space-y-2 mb-4">
+            <div class="bg-upla-night p-2.5 rounded-xl border border-upla-border flex justify-between items-center text-xs">
+              <span class="text-slate-400">IP: <span id="ip-bedrock" class="text-white font-mono font-bold select-all"></span></span>
+              <button onclick="copyNotify(SERVER_DATA.connection.bedrock.ip, 'IP Bedrock')" class="mc-btn-secondary px-2.5 py-1 rounded text-[11px] font-mc">Copiar</button>
+            </div>
+            <div class="bg-upla-night p-2.5 rounded-xl border border-upla-border flex justify-between items-center text-xs">
+              <span class="text-slate-400">Puerto: <span id="port-bedrock" class="text-white font-mono font-bold select-all"></span></span>
+              <button onclick="copyNotify(SERVER_DATA.connection.bedrock.port, 'Puerto Bedrock')" class="mc-btn-secondary px-2.5 py-1 rounded text-[11px] font-mc">Copiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       TABLA DE COMANDOS CON BUSCADOR Y FILTROS EN VIVO
+  ======================================================== -->
+  <section id="comandos" class="max-w-5xl mx-auto px-4 w-full mb-14 relative z-20">
+    <div class="border-b border-upla-border pb-3 mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <h2 class="font-mc text-lg text-white flex items-center gap-2">
+          <i data-lucide="terminal" class="w-5 h-5 text-mantaro-leaf"></i> Comandos Oficiales en el Servidor
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Disponibles para todos los participantes sin necesidad de rango OP.</p>
+      </div>
+
+      <!-- Buscador en tiempo real -->
+      <div class="relative w-full sm:w-64">
+        <input 
+          type="text" 
+          id="command-search-input" 
+          placeholder="Buscar comando o función..." 
+          oninput="filterCommands()"
+          class="w-full bg-upla-night border border-upla-border text-xs px-3.5 py-2 pl-9 rounded-xl text-white focus:outline-none focus:border-upla-cyan font-mono"
+        />
+        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+      </div>
+    </div>
+
+    <!-- Chips de filtros -->
+    <div class="flex flex-wrap gap-2 mb-4">
+      <button onclick="setCommandCategory('ALL')" class="category-chip active text-xs font-mono px-3 py-1 rounded-lg border border-upla-border bg-mantaro-forest text-white transition">Todos</button>
+      <button onclick="setCommandCategory('LifeSteal')" class="category-chip text-xs font-mono px-3 py-1 rounded-lg border border-upla-border bg-upla-card hover:bg-upla-border text-slate-300 transition">LifeSteal</button>
+      <button onclick="setCommandCategory('Seguridad')" class="category-chip text-xs font-mono px-3 py-1 rounded-lg border border-upla-border bg-upla-card hover:bg-upla-border text-slate-300 transition">Seguridad</button>
+      <button onclick="setCommandCategory('Combate')" class="category-chip text-xs font-mono px-3 py-1 rounded-lg border border-upla-border bg-upla-card hover:bg-upla-border text-slate-300 transition">Combate</button>
+      <button onclick="setCommandCategory('Rol')" class="category-chip text-xs font-mono px-3 py-1 rounded-lg border border-upla-border bg-upla-card hover:bg-upla-border text-slate-300 transition">Rol & Skins</button>
+    </div>
+
+    <div class="overflow-x-auto bg-upla-card border border-upla-border rounded-2xl shadow-xl">
+      <table class="w-full text-left border-collapse text-sm">
+        <thead>
+          <tr class="border-b border-upla-border bg-upla-night/60 text-slate-400 text-xs uppercase font-semibold">
+            <th class="p-3.5">Comando</th>
+            <th class="p-3.5">Efecto / Función</th>
+            <th class="p-3.5 hidden md:table-cell">Módulo</th>
+          </tr>
+        </thead>
+        <tbody id="commands-table-body" class="divide-y divide-upla-border/60"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       PACTO DEL VALLE DEL MANTARO (REGLAMENTO)
+  ======================================================== -->
+  <section id="reglas" class="max-w-5xl mx-auto px-4 w-full mb-14 relative z-20">
+    <div class="border-b border-upla-border pb-3 mb-5">
+      <h2 class="font-mc text-lg text-amber-300 flex items-center gap-2">
+        <i data-lucide="scroll" class="w-5 h-5 text-amber-400"></i> Pacto de las Tierras del Mantaro
+      </h2>
+      <p class="text-xs text-slate-400 mt-1">Normativa obligatoria de supervivencia, auditoría y juego limpio.</p>
+    </div>
+
+    <div id="rules-container" class="grid gap-3.5"></div>
+  </section>
+
+  <!-- ========================================================
+       ROSTER DE PARTICIPANTES CON BUSCADOR
+  ======================================================== -->
+  <section id="participantes" class="max-w-5xl mx-auto px-4 w-full mb-16 relative z-20">
+    <div class="border-b border-upla-border pb-3 mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <h2 class="font-mc text-lg text-mantaro-leaf flex items-center gap-2">
+          <i data-lucide="users" class="w-5 h-5 text-mantaro-emerald"></i> Expedicionarios Registrados
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Integrantes universitarios confirmados para la temporada.</p>
+      </div>
+
+      <!-- Buscador de Jugador -->
+      <div class="relative w-full sm:w-60">
+        <input 
+          type="text" 
+          id="player-search-input" 
+          placeholder="Filtrar por nombre..." 
+          oninput="filterPlayers()"
+          class="w-full bg-upla-night border border-upla-border text-xs px-3.5 py-1.5 pl-8 rounded-xl text-white focus:outline-none focus:border-mantaro-emerald font-mono"
+        />
+        <i data-lucide="user-search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
+      </div>
+    </div>
+
+    <div id="players-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5"></div>
+  </section>
+
+  <!-- Pie de Página -->
+  <footer class="mt-auto border-t border-upla-border bg-upla-night py-6 text-center text-xs text-slate-400 relative z-20">
+    <p class="font-mc text-xs text-slate-300 mb-1">UPLALAND 2 • INGENIERÍA DE SISTEMAS UPLA</p>
+    <p class="text-slate-500 font-mono text-[11px]">Valle del Mantaro • Cordillera Central • Purpur 1.21</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

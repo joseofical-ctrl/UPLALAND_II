@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/minecraft-4');
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #020611;
+  overflow-x: hidden;
+}
+
+.font-mc {
+  font-family: 'Minecraft', monospace;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.9);
+}
+
+/* --- Viñeta Cinemática de Lente --- */
+.cinematic-vignette {
+  background: radial-gradient(circle at 50% 40%, transparent 45%, rgba(2, 6, 17, 0.75) 85%, #020611 100%);
+}
+
+/* --- Animaciones de Flotado Orgánico --- */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatSlow 5s ease-in-out infinite 1.8s;
+}
+
+/* --- Shimmer (Destello de luz que barre la IP) --- */
+@keyframes sweepGleam {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  30%, 100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+.shimmer-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.22), transparent);
+  animation: sweepGleam 6s infinite ease-in-out;
+  pointer-events: none;
+}
+
+/* --- Borde con Pulso de Resplandor Místico --- */
+@keyframes borderPulse {
+  0%, 100% { 
+    border-color: rgba(16, 185, 129, 0.45); 
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15); 
+  }
+  50% { 
+    border-color: rgba(56, 189, 248, 0.65); 
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.28); 
+  }
+}
+
+.magical-glow {
+  animation: borderPulse 4s infinite ease-in-out;
+}
+
+/* --- Latido de Corazones en HUD --- */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.heart-pulse {
+  animation: heartbeat 1.6s infinite ease-in-out;
+}
+
+/* --- Botones Minecraft 3D --- */
+.mc-btn-primary {
+  background: #047857;
+  border-top: 3px solid #10b981;
+  border-left: 3px solid #10b981;
+  border-right: 3px solid #064e3b;
+  border-bottom: 3px solid #064e3b;
+  color: #ffffff;
+  text-shadow: 1px 1px 0px #000;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mc-btn-primary:hover {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+}
+
+.mc-btn-primary:active {
+  border-top: 3px solid #064e3b;
+  border-left: 3px solid #064e3b;
+  border-right: 3px solid #10b981;
+  border-bottom: 3px solid #10b981;
+  transform: translateY(2px);
+}
+
+.mc-btn-secondary {
+  background: #1e293b;
+  border-top: 3px solid #475569;
+  border-left: 3px solid #475569;
+  border-right: 3px solid #0f172a;
+  border-bottom: 3px solid #0f172a;
+  color: #e2e8f0;
+  text-shadow: 1px 1px 0px #000;
+  transition: all 0.15s ease;
+}
+
+.mc-btn-secondary:hover {
+  background: #334155;
+  transform: translateY(-1px);
+}
+
+.mc-btn-secondary:active {
+  transform: translateY(2px);
+}
+
+/* --- Ranuras de Minecraft Crafting Slot --- */
+.mc-slot {
+  width: 52px;
+  height: 52px;
+  background-color: #8b8b8b;
+  border-top: 3px solid #373737;
+  border-left: 3px solid #373737;
+  border-right: 3px solid #ffffff;
+  border-bottom: 3px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.15s ease;
+}
+.mc-slot:hover {
+  transform: scale(1.05);
+}
+
+/* --- Micro-interacciones de Tarjetas --- */
+.card-hover-fx {
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.card-hover-fx:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.2);
+}
+
+/* Mantiene los píxeles de Minecraft ultra nítidos */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
