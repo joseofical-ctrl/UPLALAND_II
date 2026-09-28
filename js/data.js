@@ -21,7 +21,7 @@ const SERVER_DATA = {
     heart: {
       name: "Corazón Extra Permanente",
       desc: "Añade +1 corazón permanente a tu salud (Máximo 20 corazones).",
-      resultImg: "assets/items/heart.webp",
+      resultImg: "assets/items/Heart.webp",
       resultAlt: "Corazón LifeSteal",
       slots: [
         { img: "assets/items/diamond.webp", name: "Diamante" },
