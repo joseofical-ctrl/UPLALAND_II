@@ -156,3 +156,25 @@ body {
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
+
+/* Soporte touch y scroll elástico para móviles */
+html, body {
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ocultar barra de scroll en contenedores horizontales para una estética más limpia */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Asegurar que las tarjetas de los jugadores mantengan proporciones táctiles cómodas */
+@media (max-width: 640px) {
+  .mc-btn-primary, .mc-btn-secondary {
+    min-height: 38px;
+  }
+}
