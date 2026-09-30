@@ -98,13 +98,22 @@
   ======================================================== -->
   <section class="relative w-full min-h-[660px] md:min-h-[760px] lg:min-h-[940px] flex flex-col justify-end overflow-hidden">
 
-    <!-- 2. Arte Principal Cinemático (Nítido, centrado y sin recortes) -->
+    <!-- 2. Arte Principal Cinemático (Video Looping sin cortes) -->
     <div class="absolute inset-0 -z-20 flex items-center justify-center">
-      <img 
-        src="assets/Banner.png" 
-        alt="Banner Oficial UPLALAND II - Facultad de Ingeniería UPLA" 
-        class="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.04]"
-      />
+      <video 
+        autoplay 
+        loop 
+        muted 
+        playsinline 
+        poster="assets/banner.png" 
+        class="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.04]">
+        <source src="assets/Banner.mp4" type="video/mp4">
+        <img 
+          src="assets/Banner.png" 
+          alt="Banner Oficial UPLALAND II - Facultad de Ingeniería UPLA" 
+          class="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.04]"
+        />
+      </video>
     </div>
 
     <!-- 3. Viñeta Cinemática de Lente + Fundido al Fondo Oscuro -->
@@ -159,7 +168,7 @@
         <span>¿Dificultad de DNS? Usa la IP de respaldo:</span>
         <button onclick="copyNotify(SERVER_DATA.connection.backup, 'IP Respaldo')" class="font-mono text-mantaro-leaf font-bold hover:underline transition hover:text-white">
           boarfish.aternos.host:41031
-        </button>[cite: 2]
+        </button>
       </div>
 
     </div>
